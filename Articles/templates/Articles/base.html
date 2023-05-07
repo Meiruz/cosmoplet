@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400&display=swap" rel="stylesheet">
+    <title>{{ title }}</title>
+    <link rel="icon" href="{% static 'Articles/logo.png' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <style>
+        ::-webkit-scrollbar {
+            position: fixed;
+            z-index: 1000;
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #ffffff15;
+            border-radius: 100px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #070E29;
+            border-radius: 100px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-weight: 400;
+        }
+
+        html, body {
+            overflow-x: hidden;
+        }
+
+        .wrapper__nav {
+            display: block;
+            width: 100vw;
+            height: 50px;
+            background: #0000002f;
+            backdrop-filter: blur(30px);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.039);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            max-width: 1170px;
+            padding: 0 20px;
+            margin: auto;
+        }
+
+        .logo {
+            display: block;
+        }
+
+        .cross {
+            display: block;
+            width: 2px;
+            height: 20px;
+            border-radius: 100px;
+            background: #000;
+        }
+
+        .cross:nth-child(2) {
+            transform: rotate(90deg) translateY(2px);
+        }
+
+        .link__create {
+            display: flex;
+            width: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .marks, .new {
+            transition: all .6s ease;
+        }
+
+        .marks:hover, .new:hover {
+            opacity: 0.7;
+        }
+
+        .buttons {
+            display: inline-flex;
+            align-items: center;
+            height: 50px;
+            margin-left: auto;
+            gap: 20px;
+        }
+
+        .user__logo, .new, .marks {
+            transition: all .6s ease;
+        }
+
+        .user__logo:hover, .new:hover, .marks:hover {
+            opacity: 0.7;
+        }
+
+        name {
+            color: white;
+            font-weight: 400;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            transition: all .6s ease;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo:hover {
+            opacity: 0.7;
+        }
+
+        @media screen and (max-width: 600px) {
+            name {
+                display: none;
+            }
+        }
+
+        .btn-login {
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            background: #2C7EB9;
+            border-radius: 100px;
+            font-size: 14px;
+            padding: 10px 25px;
+            transition: all .6s ease;
+        }
+
+        .btn-login:hover {
+            background: #315B81;   
+        }
+    </style>
+</head>
+
+{% block link-animate %}{% endblock %}
+<body>
+    {% if nav %}
+    <div class="wrapper__nav">
+        <div class="nav">
+            <a href="{% url 'home' %}" class="logo">
+                <img style="width: 30px; height: 30px;" class="animate__animated animate__fadeInBottomLeft animate__delay-2s" src="{% static 'Articles/logo.png' %}">
+                Сosmoplet
+            </a>
+            <div class="buttons">
+                {% if user.is_superuser %}
+                <a href="{% url 'admin:index' %}" class="new">
+                    <?xml version="1.0" ?><svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M16.4463 3.15997C17.0289 2.57733 17.8192 2.25 18.6432 2.25C20.359 2.25 21.75 3.64098 21.75 5.35684C21.75 6.18083 21.4227 6.97107 20.84 7.55371L17.2496 11.1441C15.5926 12.8012 13.5164 13.9767 11.243 14.545L10.549 14.7185C9.78351 14.9099 9.09011 14.2165 9.28149 13.451L9.45498 12.757C10.0233 10.4836 11.1989 8.40741 12.8559 6.7504L16.4463 3.15997ZM17.7804 4.00126C17.7408 4.43824 17.9647 5.01468 18.475 5.52499C18.9853 6.0353 19.5618 6.25921 19.9987 6.21961C20.1616 5.96377 20.25 5.66487 20.25 5.35684C20.25 4.46941 19.5306 3.75 18.6432 3.75C18.3351 3.75 18.0362 3.83844 17.7804 4.00126ZM18.7741 7.49834C18.2539 7.28848 17.7836 6.95489 17.4144 6.58565C17.0451 6.21641 16.7115 5.74613 16.5017 5.22592L13.9165 7.81106C12.4618 9.26576 11.4269 11.0859 10.9206 13.0794C12.9141 12.5731 14.7343 11.5382 16.189 10.0835L18.7741 7.49834Z" fill="white" fill-rule="evenodd"/><path clip-rule="evenodd" d="M12 3.75C11.0341 3.75 10.0683 3.86102 9.12171 4.08306C6.62161 4.6695 4.6695 6.6216 4.08306 9.12171C3.63898 11.0149 3.63898 12.9851 4.08306 14.8783C4.6695 17.3784 6.62161 19.3305 9.12171 19.9169C11.0149 20.361 12.9851 20.361 14.8783 19.9169C17.3784 19.3305 19.3305 17.3784 19.9169 14.8783C20.139 13.9317 20.25 12.9658 20.25 12C20.25 11.5858 20.5858 11.25 21 11.25C21.4142 11.25 21.75 11.5858 21.75 12C21.75 13.0808 21.6258 14.1616 21.3773 15.2208C20.6608 18.2756 18.2756 20.6608 15.2208 21.3773C13.1024 21.8742 10.8976 21.8742 8.77916 21.3773C5.72441 20.6608 3.33924 18.2756 2.6227 15.2209C2.12577 13.1024 2.12577 10.8976 2.6227 8.77915C3.33924 5.72441 5.72441 3.33924 8.77916 2.6227C9.83839 2.37423 10.9192 2.25 12 2.25C12.4142 2.25 12.75 2.58579 12.75 3C12.75 3.41421 12.4142 3.75 12 3.75Z" fill="white" fill-rule="evenodd"/></svg>
+                </a>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <a href="{% url 'marks' %}" class="marks">   
+                    <?xml version="1.0" ?><svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M15.0945 4.05114C13.0515 3.64962 10.9485 3.64962 8.90552 4.05114C7.06522 4.41282 5.75 6.00581 5.75 7.84496V19.2674C5.75 20.0112 6.5789 20.5045 7.25848 20.1112L10.4454 18.2668C11.406 17.7109 12.594 17.7109 13.5546 18.2668L16.7415 20.1112C17.4211 20.5045 18.25 20.0112 18.25 19.2674V7.84496C18.25 6.00581 16.9348 4.41282 15.0945 4.05114ZM8.61625 2.5793C10.8502 2.14024 13.1498 2.14023 15.3837 2.5793C17.9159 3.07695 19.75 5.27714 19.75 7.84496V19.2674C19.75 21.1964 17.6438 22.3665 15.9902 21.4095L12.8032 19.565C12.3075 19.2781 11.6925 19.2781 11.1968 19.565L8.00984 21.4095C6.35615 22.3665 4.25 21.1964 4.25 19.2674V7.84496C4.25 5.27714 6.08412 3.07695 8.61625 2.5793Z" fill="white" fill-rule="evenodd"/></svg>
+                </a>
+
+                <name>{{ user.username }}</name>
+
+                <a href="{% url 'settings' %}" class="user__logo">
+                    <?xml version="1.0" ?><svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M12 3.75C10.1331 3.75 8.66669 5.20257 8.66669 6.9375C8.66669 8.67243 10.1331 10.125 12 10.125C13.8669 10.125 15.3334 8.67243 15.3334 6.9375C15.3334 5.20257 13.8669 3.75 12 3.75ZM7.16669 6.9375C7.16669 4.32319 9.35659 2.25 12 2.25C14.6435 2.25 16.8334 4.32319 16.8334 6.9375C16.8334 9.55181 14.6435 11.625 12 11.625C9.35659 11.625 7.16669 9.55181 7.16669 6.9375ZM14.6662 14.9684C12.8999 14.6772 11.1001 14.6772 9.33382 14.9684L9.12605 15.0027L9.00404 14.2627L9.12604 15.0027C7.19882 15.3204 5.75 17.0477 5.75 19.1115C5.75 19.7634 6.25549 20.25 6.82813 20.25H17.1719C17.7445 20.25 18.25 19.7634 18.25 19.1115C18.25 17.0477 16.8012 15.3204 14.874 15.0027L14.996 14.2627L14.874 15.0027L14.6662 14.9684ZM14.9102 13.4884L14.7882 14.2284L14.9102 13.4884L15.118 13.5226C17.8042 13.9655 19.75 16.349 19.75 19.1115C19.75 20.5455 18.6185 21.75 17.1719 21.75H6.82813C5.38147 21.75 4.25 20.5455 4.25 19.1115C4.25 16.349 6.19583 13.9655 8.88203 13.5226L9.08981 13.4884L9.21182 14.2284L9.08982 13.4884C11.0177 13.1705 12.9823 13.1705 14.9102 13.4884Z" fill="white" fill-rule="evenodd"/></svg>
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn-login">Вход</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% block content %}
+
+    {% endblock %}
+</body>
+</html>

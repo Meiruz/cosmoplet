@@ -1,0 +1,80 @@
+{% extends 'Articles/base.html' %}
+
+{% block content %}
+{% load static %}
+<style>
+    .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 80px 20px 20px 20px;
+    }
+
+    main {
+        background-image: url("{% static 'Articles/bg.png' %}");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        backdrop-filter: inherit;
+        min-height: 100vh;
+    }
+
+    .wrapper__nav {
+        position: fixed;
+        z-index: 100;
+        top: 0;
+    }
+
+    .wrapper {
+        width: 100%;
+        background: #00000018;
+        backdrop-filter: blur(20px);
+        padding: 20px;
+        border-radius: 20px;
+        color: white;
+    }
+
+    .wrapper h3 {
+        font-weight: 700;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        height: 40px;
+    }
+
+    .btn-logout {
+        padding: 10px 20px;
+        background: #DA524C;
+        border: none;
+        cursor: pointer;
+        color: white;
+        font-weight: 700;
+        border-radius: 100px;
+        transition: all .5s ease;
+        border-bottom: 5px solid #9e312d;
+    }
+
+    .btn-logout:hover {
+        border-bottom: 1px solid #9e312d;
+        transform: translateY(5px);
+    }
+</style>
+
+<main>
+    <div class="container">
+        <div class="wrapper">
+            <div class="flex">
+                <h3>{{ user.username }}</h3>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-logout">Выйти</button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</main>
+{% endblock %}

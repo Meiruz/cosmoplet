@@ -1,0 +1,209 @@
+{% extends 'Articles/base.html' %}
+
+{% block content %}
+{% load static %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+<style>
+    main {
+        background-image: url("{% static 'Articles/bg.png' %}");
+        height: 100vh;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        backdrop-filter: inherit;
+    }
+
+    .container {
+        background: #00000018;
+        backdrop-filter: blur(20px);
+        border-radius: 10px;
+        max-width: 800px;
+        margin: auto;
+        max-height: 70%;
+        padding: 35px;
+        color: white;
+        overflow-y: auto;
+    }
+
+    .head {
+        padding: 10px 0;
+    }
+
+    .wrapper__head {
+        display: flex;
+        color: white;
+        font-weight: 700;
+        justify-content: space-between;
+        padding: 20px;
+        margin: auto;
+        margin-top: 60px;
+        align-items: center;
+        gap: 10px;
+        max-width: 800px;
+        background: #00000018;
+        backdrop-filter: blur(20px);
+        border-radius: 10px;
+    }
+
+    
+    
+    .wrapper__nav {
+        position: fixed;
+        z-index: 100;
+        top: 0;
+    }
+
+    .content__title {
+        font-weight: 700;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .content__text {
+        margin-top: 10px;
+        white-space: pre-wrap;
+        margin-bottom: 10px;
+    }
+
+    .content__text b {
+        font-weight: 700;
+    }
+
+    .like {
+        background: none;
+        border: none;
+        border-radius: 100px;
+        height: 30px;
+        width: 30px;
+        display: flex;
+        transition: all .6s ease;
+        justify-content: center;
+        align-items: center;
+    }
+    .forms {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+
+    .edit:hover, .like:hover {
+        opacity: 0.7;
+    }
+    
+    .carousel-item img {
+        border-radius: 20px;
+    }
+</style>
+
+{% if like %}
+<style>
+.like svg path {
+  fill: rgb(184, 47, 47);
+}
+</style>
+{% endif %}
+
+<main>
+        <div class="head">
+            <div class="wrapper__head">
+                <h3 style="font-weight: 700;">{{ article.title }}</h3>
+                <div class="forms">
+                    <form action="{% url 'save' article.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="like" style="cursor: pointer;">
+                            <?xml version="1.0" ?><svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M15.0945 4.05114C13.0515 3.64962 10.9485 3.64962 8.90552 4.05114C7.06522 4.41282 5.75 6.00581 5.75 7.84496V19.2674C5.75 20.0112 6.5789 20.5045 7.25848 20.1112L10.4454 18.2668C11.406 17.7109 12.594 17.7109 13.5546 18.2668L16.7415 20.1112C17.4211 20.5045 18.25 20.0112 18.25 19.2674V7.84496C18.25 6.00581 16.9348 4.41282 15.0945 4.05114ZM8.61625 2.5793C10.8502 2.14024 13.1498 2.14023 15.3837 2.5793C17.9159 3.07695 19.75 5.27714 19.75 7.84496V19.2674C19.75 21.1964 17.6438 22.3665 15.9902 21.4095L12.8032 19.565C12.3075 19.2781 11.6925 19.2781 11.1968 19.565L8.00984 21.4095C6.35615 22.3665 4.25 21.1964 4.25 19.2674V7.84496C4.25 5.27714 6.08412 3.07695 8.61625 2.5793Z" fill="white" fill-rule="evenodd"/></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="wrapper__content">
+                <div class="content">
+                    <img src="{{ article.image.url }}" style="width:100%; border-radius: 20px;">
+                    <p class="content__text">{{ article.text|safe }}</p>
+                
+                    <div class="carousel" style="border-radius: 20px;">
+                    {% if n == 1 %}
+                    <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="{{ article.slider1.url }}" class="d-block w-100" alt="...">
+                          </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                    {% endif %}
+
+                    
+                    {% if n == 2 %}
+                    <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="{{ article.slider1.url }}" class="d-block w-100" alt="...">
+                          </div>
+                          <div class="carousel-item">
+                            <img src="{{ article.slider2.url }}" class="d-block w-100" alt="...">
+                          </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                    {% endif %}
+                    
+                    
+                    {% if n == 3 %}
+                    <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="{{ article.slider1.url }}" class="d-block w-100" alt="...">
+                          </div>
+                          <div class="carousel-item">
+                            <img src="{{ article.slider2.url }}" class="d-block w-100" alt="...">
+                          </div>
+                          <div class="carousel-item">
+                            <img src="{{ article.slider3.url }}" class="d-block w-100" alt="...">
+                          </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: end; margin-top: 10px; font-weight: 400;">{{ article.date }}</p>
+
+        </div>
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<script>    
+    var myCarousel = document.querySelector('.carousel')
+    var carousel = new bootstrap.Carousel(myCarousel, {
+    interval: 2000,
+    wrap: false
+    })
+</script>
+{% endblock %}
